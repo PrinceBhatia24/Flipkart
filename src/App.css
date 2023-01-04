@@ -704,7 +704,9 @@ h1 {
 }
 
 .CHP {
-    font-size: 17px
+    font-size: 17px;
+    color: #878787;
+    font-weight: 600;
 }
 
 @media(max-width:590px) {
@@ -712,6 +714,7 @@ h1 {
 .CHP {
     font-size: 14px;
     margin-left: -19px;
+    /* padding: 10px 10px; */
 }
 .CHP2 {
     
@@ -730,8 +733,17 @@ margin-left: -23px;
 }
 
 .mt5 {
-    margin-top: 5rem!important;
+    margin-top: 3rem!important;
 }
-.p3 {
+.p2 {
     padding: 2.5rem!important;
+}
+.responsive {
+    width: 100%;
+    height: auto;
+  }
+  dl, ol, ul {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    list-style-type: none;
 }

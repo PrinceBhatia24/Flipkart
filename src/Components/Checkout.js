@@ -1,13 +1,12 @@
-import axios from 'axios';
 import React, { useState, useEffect } from 'react'
-import { NavLink } from 'react-router-dom';
 import Footer from './Footer';
 import Navbar from './Navbar';
+import { NavLink } from 'react-router-dom';
 
 function Checkout() {
-
     const [total, setTotal] = useState(0);
-    const [cartItems , setCartItems] = useState(0)
+    const [cartItems, setCartItems] = useState(0)
+    const [cart, setCart] = useState([])
     function UpdateCart() {
         let cartString = localStorage.getItem("Cart");
         let Cart = JSON.parse(cartString)
@@ -21,46 +20,47 @@ function Checkout() {
             setCartItems(Cart.length)
             let table = "";
             let TotalPrice = 0;
+            // setCart(Cart)
             Cart.map((item) => {
                 table += `
-     <ul>
-     <li><div class="card mb-3" style="max-width: 540px;">
-     <div class="row g-0">
-       <div class="col-md-4">
-       <img
-       src="Flipkart/images/${item.ProductImage}"
-       alt="p"
-       class="card-img-top mx-auto p3"
-       style={{ height: "100px", width: "100px" }}
-     />
-       </div>
-       <div class="col-md-8">
-         <div class="card-body">
-           <h5 class="card-title">${item.ProductName}</h5>
-           <p class="card-text">₹${item.ProductPrice}</p>
-           <p class="card-text"><small class="text-muted">Quantity:${item.ProductQuantity}</p>
-           <p class="card-text"><small class="text-muted">Seller:XONIGHT E-Commerce</small></p>
-           <button
-           class="btn btn-danger btn-sm"
-          
-           onClick={DeleteItem(${item.ProductQuantity}){console.log("cd")}}
-         >
-           Remove
-         </button>
+   <ul>
+   <li><div className="card mb-3" style={{listStyleType:'none'}}>
+   <div className="row g-0">
+     <div className="col-md-4">
+     <img 
+     src="Flipkart/images/${item.ProductImage}"
+     className="img-fluid rounded-start p2 responsive" alt="cd"></img>
+     </div>
+     <div className="col-md-8">
+       <div className="card-body">
+         <h5 className="card-title">${item.ProductName}</h5>
+         <p className="card-text">₹${item.ProductPrice}</p>
+         <p className="card-text"><small className="text-muted">Quantity:${item.ProductQuantity}</p>
+         <p className="card-text"><small className="text-muted">Seller:XONIGHT E-Commerce</small></p>
+         <button
+         className="btn btn-danger btn-sm"
+        
+         onClick={DeleteItem()}
+       >
+         Remove
+       </button>
 
-           </div>
-       </div>
+         </div>
      </div>
    </div>
-              </li>
-     </ul>     
-                `
+ </div>
+            </li>
+   </ul>     
+              `
+
                 TotalPrice += item.ProductPrice * item.ProductQuantity;
                 setTotal(TotalPrice);
             })
-            document.getElementById("tbodyy").innerHTML = table
+            //  document.getElementById("tbodyy").innerHTML = table
         }
     }
+
+    //  console.log(cart)
     useEffect(() => {
         UpdateCart();
     })
@@ -70,126 +70,148 @@ function Checkout() {
         let NewCart = Cart.filter((item) => item.ProductId !== pID)
         localStorage.setItem('Cart', JSON.stringify(NewCart))
         UpdateCart();
-        // showToast("Item is Removed From Cart");
-    
-      }
+        showToast("Item is Removed From Cart");
+
+    }
+    function showToast(content) {
+        document.getElementById('toast2').classList.add("display");
+        document.getElementById('toast2').innerHTML = content;
+        setTimeout(() => {
+            document.getElementById('toast2').classList.remove("display");
+        }, 2000);
+    }
     const discount = (total / 100) * 10
     const subTotal = total - discount
 
-    
+
     return (
-        <div style={{ backgroundColor: '#f1f3f6' }} >
-            <Navbar />
-            
-            <div className='container mt5 d-flex'  style={{marginTop:'140px'}}>
-                <div style={{ border: '2px solid #e5e6e9', marginLeft: 20, height: '84vh', backgroundColor: 'white', float: 'left', width: '100vw' ,overflow: 'hidden', overflowY: 'scroll', height: 730 }} >
-                    <div style={{marginRight:20 , textAlign:'end'}}>
-                    Delivery by Sun  | Free₹40
+        <>
+            <div style={{ backgroundColor: '#f1f3f6' }} >
+                <Navbar />
+
+                <div className='container mt5 d-flex'  >
+                    <div style={{ border: '2px solid #e5e6e9', marginLeft: 20, height: '84vh', backgroundColor: 'white', float: 'left', width: '100vw', overflow: 'hidden', overflowY: 'scroll', height: 732 }} >
+                        <div className=' mt-1' style={{ justifyContent: 'space-between', paddingTop: 10, height: 40 }}>
+                            <div className='d-flex' style={{ justifyContent: 'space-between' }}>
+                                <h1 style={{ fontSize: 17, marginLeft: 24, fontWeight: 400 }}> 1. LOGIN <span className='mx-3'>&#10003;</span></h1>
+                                <button className='btn btn-primary btn-sm' style={{ marginRight: 20 }}>Change  </button>
+                            </div>
+                        </div>
+                        <div class="accordion" id="accordionExample">
+                            <div class="accordion-item mt-3">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button bg-primary text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        2.  Delivery Address <span className='mx-3'>&#10003;</span>
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <div>
+                                            <form action="">
+                                                <p>
+                                                    <input className='mx-3' type="radio" id='address1' name='address' value="p1" />
+                                                    <label For="address1">Prince Bhatia <span className='mx-4'>9468359122</span> </label><br></br>
+                                                    <p className='mx-5'> House no 173 , Sunder nagr, Near Hanuman Mandir , Fatehabad , Haryana </p>
+                                                </p>
+
+                                                <input className='mx-3' type="radio" id='address2' name='address' value="p1" />
+                                                <label For="address2">Surinder <span className='mx-4'>9466859122</span> </label><br></br>
+                                                <p className='mx-5'> House no 173 , Sunder nagr, Near Hanuman Mandir , Fatehabad , Haryana </p>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion" id="accordionExample">
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo">
+
+                                    <button class="accordion-button collapsed bg-primary text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        3. Payment Option <span className='mx-3'>&#10003;</span>
+
+                                    </button>
+
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <div>
+                                            <form action="">
+                                                <p>
+                                                    <input className='mx-3' type="radio" id='Payment1' name='Payment' value="UPI" />
+                                                    <label For="Payment1">UPI</label><br></br>
+
+                                                </p>
+
+                                                <p>
+                                                    <input className='mx-3' type="radio" id='Payment2' name='Payment' value="Credit/Debit" />
+                                                    <label For="Payment2">Credit/Debit</label><br></br>
+                                                </p>
+                                                <p>
+                                                    <input className='mx-3' type="radio" id='Payment3' name='Payment' value="Wallets" />
+                                                    <label For="Payment3">Wallets</label><br></br>
+                                                </p>
+                                                <p>
+                                                    <input className='mx-3' type="radio" id='Payment4' name='Payment' value="EMI" />
+                                                    <label For="Payment4">EMI</label><br></br>
+                                                </p>
+                                                <p>
+                                                    <input className='mx-3' type="radio" id='Payment5' name='Payment' value="Cash On Delivery" />
+                                                    <label For="Payment5">Cash On Delivery</label><br></br>
+                                                </p>
+
+                                            </form>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div className='mx-4 mt-3' style={{ float: 'right' }}>
+                            <NavLink className='btn' to="/Checkout" style={{ backgroundColor: '#fb641b', fontSize: 20, color: 'white' }}> Place Order</NavLink>
+                        </div>
+
                     </div>
-                    <div id="tbodyy">
-                    
+
+                    <div style={{ border: '2px solid #e5e6e9', height: '40vh', marginRight: 0, marginLeft: 0, backgroundColor: 'white', width: '49vw' }}>
+                        <p className='CHP' style={{ padding: 10, marginLeft: 10 }}>
+                            PRICE DETAILS
+                        </p><hr></hr>
+                        <div className='d-flex' style={{ justifyContent: 'space-between' }}>
+                            <h1 style={{ fontSize: 17, marginLeft: 20, fontWeight: 700 }}>Price ({cartItems} items)</h1>
+                            <h1 style={{ fontSize: 17, marginLeft: 20, color: '#3b903f', marginRight: '20px' }}>{total}</h1>
+                        </div>
+
+                        <div className='d-flex' style={{ justifyContent: 'space-between', marginTop: '20px' }}>
+                            <h1 style={{ fontSize: 17, marginLeft: 20, fontWeight: 700 }}>Delivery Charges</h1>
+                            <h1 style={{ fontSize: 17, marginLeft: 20, color: '#3b903f', marginRight: '20px' }}>Free</h1>
+                        </div>
 
 
-                    </div>
-                    <div className='mx-4' style={{float:'right' }}>
-                        <button className='btn' style={{backgroundColor:'#fb641b' , fontSize:20 , color:'white'}}> PLACE ORDER</button>
+                        <hr></hr>
+                        <div className='d-flex' style={{ justifyContent: 'space-between', marginTop: '20px' }}>
+                            <h1 style={{ fontSize: 17, marginLeft: 20, fontWeight: 700 }}>Total Amount </h1>
+                            <h1 style={{ fontSize: 17, marginLeft: 20, color: '#3b903f', marginRight: '20px', fontWeight: 700 }}>{subTotal}</h1>
+                        </div>
+                        <hr></hr>
+                        <div className='d-flex' style={{ justifyContent: 'space-between', marginTop: '20px' }}>
+                            <h1 style={{ fontSize: 17, marginLeft: 20, color: '#3b903f', fontWeight: 700 }}>You Will Save 10% off on This Order</h1>
+                        </div>
+
+                        <div className='container' style={{ marginTop: 33 }}>
+                            <img src="Flipkart/images/fl.png" className='responsive' alt="" />
+                        </div>
                     </div>
                 </div>
-                <div style={{ border: '2px solid #e5e6e9', height: '60vh', marginRight: 20, marginLeft: 20, backgroundColor: 'white', width: '35vw' }}>
-                    <p className='CHP' style={{ padding: 10, marginLeft: 10 }}>
-                        PRICE DETAILS
-                    </p><hr></hr>
-                    <div className='d-flex' style={{ height: '23vh' }}>
-                        <div className='divvv' >
-                            <ul className='d-flex CHP' style={{ listStyleType: 'none' }}>
-                                <li style={{ color: 'black', fontWeight: '500px' }} className='CHP'>Price ( {cartItems} items)</li>
-
-                            </ul>
-
-
-                            <ul className='d-flex CHP' style={{ listStyleType: 'none' }}>
-                                <li style={{ color: 'black', fontWeight: '500px' }} className='CHP'>Discount</li>
-
-                            </ul>
-                            <ul className='d-flex CHP' style={{ listStyleType: 'none' }}>
-                                <li style={{ color: 'black', fontWeight: '500px' }} className='CHP'>Delivery Charges</li>
-
-                            </ul>
-                            <ul className='d-flex CHP' style={{ listStyleType: 'none' }}>
-
-                                <li style={{ color: 'black', fontWeight: '500px' }} className='CHP'>Packaging Fee</li>
-                            </ul>
-
-                        </div>
-                        <div className='divv' >
-                            <ul className='d-flex CHP2' style={{ listStyleType: 'none' }}>
-
-                                <li style={{ color: '#3b903f', fontWeight: 900, }} className='CHP'>{total}</li>
-                            </ul>
-
-
-                            <ul className='d-flex CHP2' style={{ listStyleType: 'none' }}>
-
-                                <li style={{ fontWeight: 900, }} className='CHP'>10%</li>
-                            </ul>
-                            <ul className='d-flex CHP2' style={{ listStyleType: 'none' }}>
-
-                                <li style={{ fontWeight: 900, }} className='CHP'>Free</li>
-                            </ul>
-                            <ul className='d-flex CHP2' style={{ listStyleType: 'none' }}>
-
-                                <li style={{ color: '#3b903f', fontWeight: 900, }} className='CHP'>₹49</li>
-                            </ul>
-
-                        </div>
-                    </div>
-                    <hr></hr>
-                    <div className='d-flex' style={{ border: '1px solid white ' }}>
-
-                        <div className='divvv' style={{ border: '1px solid white' }}>
-
-                            <ul className='d-flex CHP' style={{ listStyleType: 'none' }}>
-                                <li className='CHP' style={{ fontWeight: 700 }}>Total Amount </li>
-
-                            </ul>
-
-                        </div>
-
-                        <div className='divv' style={{ border: '1px solid white', }}>
-
-                            <ul className='d-flex CHP2' style={{ listStyleType: 'none' }}>
-
-                                <li className='CHP'>{subTotal}</li>
-                            </ul>
-
-                        </div>
-
-
-                    </div>
-                    <hr></hr>
-
-                    <div>
-                        <ul className='d-flex' style={{ listStyleType: 'none' }}>
-                            <li className='CHP' style={{ color: '#3b903f', fontWeight: 900, marginLeft: -31 }}>You Will Save 10% off on This Order</li>
-
-                        </ul>
-                    </div>
-                </div>
+                <Footer />
             </div>
-      
-            <Footer />
-        </div>
+
+
+        </>
     )
 }
 export default Checkout
-
-    // ` 
-    //       <tr>
-    //         <td>${item.ProductName}</td>
-    //         <td>₹${item.ProductPrice}</td>
-    //         <td>${item.ProductQuantity}</td>
-    //         <td>${item.ProductPrice * item.ProductQuantity}</td>
-    //         <td> <button onClick={DeleteItem(${item.ProductId})} class="btn btn-danger btn-sm">Removes</button></td>
-    //       </tr>
-          
-    //     `

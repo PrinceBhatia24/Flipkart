@@ -305,7 +305,7 @@ export default function Navbar() {
           </li>
           <li>
 
-            <NavLink type="button" to="/Checkout" style={{ backgroundColor: 'rgb(40, 116, 240)', borderColor: 'rgb(40, 116, 240)', color: "white", padding: "0px 0px", height: 27.6, marginLeft: '-103px' }} className="btn cartbtn rounded-0" >
+            <NavLink type="button" to="/Cart" style={{ backgroundColor: 'rgb(40, 116, 240)', borderColor: 'rgb(40, 116, 240)', color: "white", padding: "0px 0px", height: 27.6, marginLeft: '-103px' }} className="btn cartbtn rounded-0" >
               <i className="fa-solid fa-cart-shopping" ><span id="btn5" style={{ marginTop: '-20px' }} className="badge badge-danger">0</span></i>
             </NavLink>
           </li>
