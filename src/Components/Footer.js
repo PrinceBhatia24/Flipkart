@@ -5,7 +5,7 @@ export default function Footer() {
 <>
   {/* <====================Footer============================> */}
   <footer
-    className="text-center mt-5 text-lg-start text-light"
+    className="text-center mt8 text-lg-start text-light"
     style={{ backgroundColor: "#182337" }}
   >
     <section

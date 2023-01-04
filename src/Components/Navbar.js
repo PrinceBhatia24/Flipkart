@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom';
 import "../App.css"
+import { useHistory } from 'react-router-dom';
 
 
 export default function Navbar() {
@@ -45,6 +46,18 @@ export default function Navbar() {
       document.getElementById("tbody").innerHTML = table
     }
   }
+  const history = useHistory();
+  const SingleProduct = (pID, pTitle, pPrice,pImage) => {
+    let SingleProduct = localStorage.getItem("SingleProduct");
+    if (SingleProduct !== null) {
+      console.log("Working")
+     let Products = [];
+     let Product = { ProductId: pID, ProductName: pTitle, ProductPrice: pPrice, ProductQuantity: 1 ,ProductImage:pImage }
+     Products.push(Product);
+     localStorage.setItem("SingleProduct", JSON.stringify(Products));
+     history.push("/SingleProduct")
+   }
+ }
 
 
   function DeleteItem(pID) {
@@ -153,7 +166,7 @@ export default function Navbar() {
   }
   useEffect(() => {
     axios.get("http://localhost:5006/loginn").then((response) => {
-      console.log(response)
+      // console.log(response)
       if (response.data.loggedin == true) {
         setNames(response.data.user.name)
       }
@@ -576,7 +589,7 @@ export default function Navbar() {
       </div>
       {/* <====================Modal2 End============================> */}
 
-      <div style={{ marginBottom: -78 }} className="alert alert-primary mt-4" id="message" role="alert">
+      <div style={{ marginBottom: -112 }} className="alert alert-primary mt4" id="message" role="alert">
         {message}
       </div>
       <div id="toast2">Custom Toast Text</div>

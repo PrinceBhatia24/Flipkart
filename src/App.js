@@ -11,7 +11,8 @@ import MensBottomWear from './Pages/MensBottomWear'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Cart from './Components/Cart';
 import Checkout from './Components/Checkout';
-// import SingleProduct from './Components/SingleProduct';
+import SingleProduct from './Components/SingleProduct';
+import SubCategory from './Components/SubCategory';
 
 function App() {
   return (
@@ -20,8 +21,9 @@ function App() {
         <Switch>
           <Route exact path="/Flipkart">
             <Navbar />
+            
             <UpperBanner />
-            <Caresoul />
+            <Caresoul />  
             <OffCanvas />
             <Products />
             <Footer />
@@ -46,12 +48,11 @@ function App() {
             <Cart />
           </Route>
           <Route exact path="/Checkout">
-            
             <Checkout />
           </Route>
-          {/* <Route exact path='/SingleProduct/:id' >
+          <Route exact path='/SingleProduct' >
             <SingleProduct />
-          </Route> */}
+          </Route>
         </Switch>
       </Router>
     </>

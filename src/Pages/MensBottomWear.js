@@ -2,77 +2,6 @@ import React, { useState, useEffect } from 'react'
 import SideBar from "../Components/SideBar";
 
 function MensBottomWear() {  
-
-  const AddToCart = (pID, pName, pPrice, pImage) => {
-    let Cart = localStorage.getItem("Cart");
-    if (Cart == null) {
-      let Products = [];
-      let Product = { ProductId: pID, ProductName: pName, ProductPrice: pPrice, ProductQuantity: 1, ProductImage: pImage }
-      Products.push(Product);
-      localStorage.setItem("Cart", JSON.stringify(Products));
-      showToast("Product is added to cart");
-      UpdateCart();
-    }
-    else {
-      let pcart = JSON.parse(Cart);
-      let oldProduct = pcart.find((item) => item.ProductId === pID)
-      if (oldProduct) {
-        oldProduct.ProductQuantity = oldProduct.ProductQuantity + 1
-        pcart.map((item) => {
-          if (item.Productid === oldProduct.ProductId) {
-            item.ProductQuantity = oldProduct.ProductQuantity;
-          }
-
-        })
-        localStorage.setItem("Cart", JSON.stringify(pcart));
-
-        showToast("Product Quantity is increased");
-      } else {
-        let Product = { ProductId: pID, ProductName: pName, ProductPrice: pPrice, ProductQuantity: 1, ProductImage: pImage }
-        pcart.push(Product)
-        localStorage.setItem("Cart", JSON.stringify(pcart));
-
-        showToast("Product is added to cart");
-      }
-      UpdateCart();
-    }
-  }
-  function showToast(content) {
-    document.getElementById('toast2').classList.add("display");
-    document.getElementById('toast2').innerHTML = content;
-    setTimeout(() => {
-      document.getElementById('toast2').classList.remove("display");
-    }, 2000);
-  }
-
-  const [total, setTotal] = useState(0);
-  function UpdateCart() {
-    let cartString = localStorage.getItem("Cart");
-    let Cart = JSON.parse(cartString)
-    if (Cart === null || Cart.length === 0) {
-      document.getElementsByClassName(".cartbtn").innerHTML = "( 0 )";
-    }
-    else {
-      document.getElementById("btn5").innerHTML = `${Cart.length}`
-
-    }
-  }
-
-
-  const DeleteItem = (pID) => {
-    let Cart = JSON.parse(localStorage.getItem('Cart'));
-    let NewCart = Cart.filter((item) => item.ProductId !== pID)
-    localStorage.setItem('Cart', JSON.stringify(NewCart))
-    UpdateCart();
-    showToast("Item is Removed From Cart");
-
-  }
-
-
-  useEffect(() => {
-    UpdateCart();
-  })
-
   return (
     <>
       <div className="container2">
@@ -112,7 +41,6 @@ function MensBottomWear() {
                           borderColor: "#000000",
                           marginLeft: 2,
                         }}
-                        onClick={() => AddToCart(17, " Slim Men Black Jeans", "379", "8.webp")}
                       >
                         Buy Now
                       </button>
@@ -143,7 +71,6 @@ function MensBottomWear() {
                           borderColor: "#000000",
                           marginLeft: 2,
                         }}
-                        onClick={() => AddToCart(18, " Pack of 2 Solid Men Black", "339", "9.webp")}
                       >
                         Buy Now
                       </button>
@@ -179,7 +106,6 @@ function MensBottomWear() {
                           borderColor: "#000000",
                           marginLeft: 2,
                         }}
-                        onClick={() => AddToCart(19, "  Pack of 5 Men Multicolor", "499", "10.webp")}
                       >
                         Buy Now
                       </button>
@@ -215,7 +141,6 @@ function MensBottomWear() {
                           borderColor: "#000000",
                           marginLeft: 2,
                         }}
-                        onClick={() => AddToCart(20, "Solid Men Black Regular Shorts", "224", "11.webp")}
                       >
                         Buy Now
                       </button>
@@ -260,7 +185,6 @@ function MensBottomWear() {
                           borderColor: "#000000",
                           marginLeft: 2,
                         }}
-                        onClick={() => AddToCart(21, "Slim Men Dark Blue Jeans", "898", "12.webp")}
                       >
                         Buy Now
                       </button>
@@ -292,7 +216,6 @@ function MensBottomWear() {
                           borderColor: "#000000",
                           marginLeft: 2,
                         }}
-                        onClick={() => AddToCart(22, "Slim Men Black Jeans", "832", "13.webp")}
                       >
                         Buy Now
                       </button>
@@ -328,7 +251,6 @@ function MensBottomWear() {
                           borderColor: "#000000",
                           marginLeft: 2,
                         }}
-                        onClick={() => AddToCart(23, "Regular Men Blue Jeans", "1199", "14.webp")}
                       >
                         Buy Now
                       </button>
@@ -364,7 +286,6 @@ function MensBottomWear() {
                           borderColor: "#000000",
                           marginLeft: 2,
                         }}
-                        onClick={() => AddToCart(24, " Regular Men Blue Jeans", "898", "15.webp")}
                       >
                         Buy Now
                       </button>

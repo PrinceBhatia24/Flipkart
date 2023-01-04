@@ -1,11 +1,13 @@
 import React from "react";
+import SubCategory from "./SubCategory";
 
 export default function UpperBanner() {
   return (
     <>
+    <SubCategory/>
       {/* <====================Upper Banner============================> */}
-      <div className="container-fluid" id="UB">
-        <div className="row border  bg-white" style={{ marginTop: 77 }}>
+      <div className="container-fluid" id="UB" >
+        <div className="row border bg-white"  style={{ marginTop: 112 }}>
           <div className="col-sm">
             <img
               src="https://rukminim1.flixcart.com/flap/128/128/image/f15c02bfeb02d15d.png?q=100"

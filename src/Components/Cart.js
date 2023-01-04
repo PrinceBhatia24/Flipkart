@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom';
 import Footer from './Footer';
 import Navbar from './Navbar';
+import SubCategory from './SubCategory';
 
 function Cart() {
 
@@ -91,8 +92,8 @@ function Cart() {
     return (
         <div style={{ backgroundColor: '#f1f3f6' }} >
             <Navbar />
-            
-            <div className='container mt5 d-flex'  >
+            <SubCategory/>
+            <div className='container mt7 d-flex'  >
                 {/* <div style={{ border: '2px solid #e5e6e9 ', backgroundColor: 'white', width: '100vw' ,overflow: 'hidden', overflowY: 'scroll', height: 660 }} >
                     <div style={{marginRight:20 , textAlign:'end'}}>
                     Delivery by Sun  | Free₹40
