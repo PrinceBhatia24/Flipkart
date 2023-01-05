@@ -24,7 +24,7 @@ function Products() {
       console.error("error", err)
     }
   }
-  
+
 
   const [laptopProducts, setLaptopProducts] = useState([])
 
@@ -50,11 +50,11 @@ function Products() {
   }, [])
 
 
-  const AddToCart = (pID, pTitle, pPrice,pImage) => {
+  const AddToCart = (pTitle, pPrice, pImage) => {
     let Cart = localStorage.getItem("Cart");
     if (Cart == null) {
       let Products = [];
-      let Product = { ProductId: pID, ProductName: pTitle, ProductPrice: pPrice, ProductQuantity: 1 ,ProductImage:pImage }
+      let Product = { ProductName: pTitle, ProductPrice: pPrice, ProductQuantity: 1, ProductImage: pImage }
       Products.push(Product);
       localStorage.setItem("Cart", JSON.stringify(Products));
       showToast("Product is added to cart");
@@ -62,11 +62,11 @@ function Products() {
     }
     else {
       let pcart = JSON.parse(Cart);
-      let oldProduct = pcart.find((item) => item.ProductId === pID)
+      let oldProduct = pcart.find((item) => item.ProductImage === pImage)
       if (oldProduct) {
         oldProduct.ProductQuantity = oldProduct.ProductQuantity + 1
         pcart.map((item) => {
-          if (item.Productid === oldProduct.ProductId) {
+          if (item.ProductImage === oldProduct.ProductImage) {
             item.ProductQuantity = oldProduct.ProductQuantity;
           }
 
@@ -75,7 +75,7 @@ function Products() {
 
         showToast("Product Quantity is increased");
       } else {
-        let Product = { ProductId: pID, ProductName: pTitle, ProductPrice: pPrice, ProductQuantity: 1 ,ProductImage:pImage }
+        let Product = { ProductName: pTitle, ProductPrice: pPrice, ProductQuantity: 1, ProductImage: pImage }
         pcart.push(Product)
         localStorage.setItem("Cart", JSON.stringify(pcart));
 
@@ -84,17 +84,15 @@ function Products() {
       UpdateCart();
     }
   }
-  
+
   const history = useHistory();
-   const SingleProduct = (pID, pTitle, pPrice,pImage) => {
-     let SingleProduct = localStorage.getItem("SingleProduct");
-     if (SingleProduct !== null) {
-      let Products = [];
-      let Product = { ProductId: pID, ProductName: pTitle, ProductPrice: pPrice, ProductQuantity: 1 ,ProductImage:pImage }
-      Products.push(Product);
-      localStorage.setItem("SingleProduct", JSON.stringify(Products));
-      history.push("/SingleProduct")
-    }
+  const SingleProduct = (pTitle, pPrice, pImage) => {
+    let SingleProduct = localStorage.getItem("SingleProduct");
+    let Products = [];
+    let Product = { ProductName: pTitle, ProductPrice: pPrice, ProductQuantity: 1, ProductImage: pImage }
+    Products.push(Product);
+    localStorage.setItem("SingleProduct", JSON.stringify(Products));
+    history.push("/SingleProduct")
   }
   function showToast(content) {
     document.getElementById('toast2').classList.add("display");
@@ -141,7 +139,7 @@ function Products() {
   const buttonEl = document.getElementById('remove');
   buttonEl && buttonEl.addEventListener('click', () => alert("Hi user!"));
 
-  
+
   const DeleteItem = (pID) => {
     let Cart = JSON.parse(localStorage.getItem('Cart'));
     let NewCart = Cart.filter((item) => item.ProductId !== pID)
@@ -150,7 +148,7 @@ function Products() {
     showToast("Item is Removed From Cart");
 
   }
-  
+
 
   useEffect(() => {
     UpdateCart();
@@ -180,8 +178,8 @@ function Products() {
                         src={process.env.PUBLIC_URL + `/images/${product.imageUrl}`}
                         alt=""
                         className="card-img-top mx-auto p-2 responsive"
-                        style={{ height: 200, width: "200PX", cursor:'pointer' }}
-                        onClick={() => SingleProduct(product._id, product.title, product.price,product.imageUrl)}
+                        style={{ height: 200, width: "200PX", cursor: 'pointer' }}
+                        onClick={() => SingleProduct(product._id, product.title, product.price, product.imageUrl)}
                       />
                       <div className="card-body text-center">
                         <h3 className="card-title ">{product.title}</h3>
@@ -197,7 +195,7 @@ function Products() {
                             borderColor: "#000000",
                             marginLeft: 2
                           }}
-                          onClick={() => AddToCart(product._id, product.title, product.price,product.imageUrl)}
+                          onClick={() => AddToCart(product._id, product.title, product.price, product.imageUrl)}
                         >
                           Buy Now
                         </button>
@@ -215,6 +213,7 @@ function Products() {
                               alt=""
                               className="card-img-top mx-auto p-2"
                               style={{ height: 200, width: "200PX" }}
+                              onClick={() => SingleProduct("Iphone 13", "69900", "iphone-13-mlpg3hn-a-apple-original-imag6vpyghayhhrh.webp")}
                             />
                             <div className="card-body text-center">
                               <h3 className="card-title ">Iphone 13</h3>
@@ -231,6 +230,7 @@ function Products() {
                                   borderColor: "#000000",
                                   marginLeft: 2
                                 }}
+                                onClick={() => AddToCart("Iphone 13", "69900", "iphone-13-mlpg3hn-a-apple-original-imag6vpyghayhhrh.webp")}
                               >
                                 Buy Now
                               </button>
@@ -245,6 +245,7 @@ function Products() {
                               alt=""
                               className="card-img-top mx-auto p-2"
                               style={{ height: 200, width: "200PX" }}
+                              onClick={() => SingleProduct("Iphone 12 Pro", "109900", "apple-iphone-12-pro-dummyapplefsn-original-imafwgbrzxg3nggd.webp")}
                             />
                             <div className="card-body text-center">
                               <h3 className="card-title ">Iphone 12 Pro</h3>
@@ -262,6 +263,7 @@ function Products() {
                                   borderColor: "#000000",
                                   marginLeft: 2
                                 }}
+                                onClick={() => AddToCart("Iphone 12 Pro", "109900", "apple-iphone-12-pro-dummyapplefsn-original-imafwgbrzxg3nggd.webp")}
                               >
                                 Buy Now
                               </button>
@@ -277,6 +279,7 @@ function Products() {
                               alt=""
                               className="card-img-top mx-auto p-2"
                               style={{ height: 200, width: "200PX" }}
+                              onClick={() => SingleProduct("SAMSUNG Galaxy S22", "79900", "-original-imaggj686yhjdrgk.webp")}
                             />
                             <div className="card-body text-center">
                               <h3 className="card-title text-center">SAMSUNG Galaxy S22 </h3>
@@ -294,6 +297,7 @@ function Products() {
                                   borderColor: "#000000",
                                   marginLeft: 2
                                 }}
+                                onClick={() => AddToCart("SAMSUNG Galaxy S22", "79900", "-original-imaggj686yhjdrgk.webp")}
                               >
                                 Buy Now
                               </button>
@@ -308,6 +312,7 @@ function Products() {
                               alt=""
                               className="card-img-top mx-auto p-2"
                               style={{ height: 200, width: "150PX" }}
+                              onClick={() => SingleProduct("OnePlus Nord 2T 5G", "74990", "nord-2t-5g-5011102062-oneplus-original-imagfx6bzs4hd4ft.webp")}
                             />
                             <div className="card-body text-center">
                               <h3 className="card-title text-center">OnePlus Nord 2T 5G </h3>
@@ -325,6 +330,7 @@ function Products() {
                                   borderColor: "#000000",
                                   marginLeft: 2
                                 }}
+                                onClick={() => AddToCart("OnePlus Nord 2T 5G", "74990", "nord-2t-5g-5011102062-oneplus-original-imagfx6bzs4hd4ft.webp")}
                               >
                                 Buy Now
                               </button>
@@ -363,8 +369,8 @@ function Products() {
                         src={process.env.PUBLIC_URL + `/images/${laptopProduct.imageUrl}`}
                         alt=""
                         className="card-img-top mx-auto p-2"
-                        style={{ height: 200, width: "200PX", cursor:'pointer' }}
-                        onClick={() => SingleProduct(laptopProduct._id, laptopProduct.title, laptopProduct.price,laptopProduct.imageUrl)}
+                        style={{ height: 200, width: "200PX", cursor: 'pointer' }}
+                        onClick={() => SingleProduct(laptopProduct._id, laptopProduct.title, laptopProduct.price, laptopProduct.imageUrl)}
                       />
                       <div className="card-body text-center">
                         <h3 className="card-title ">{laptopProduct.title}</h3>
@@ -380,7 +386,7 @@ function Products() {
                             borderColor: "#000000",
                             marginLeft: 2
                           }}
-                          onClick={() => AddToCart(laptopProduct._id, laptopProduct.title, laptopProduct.price,laptopProduct.imageUrl)}
+                          onClick={() => AddToCart(laptopProduct._id, laptopProduct.title, laptopProduct.price, laptopProduct.imageUrl)}
                         >
                           Buy Now
                         </button>
@@ -399,6 +405,7 @@ function Products() {
                               alt=""
                               className="card-img-top mx-auto p-2"
                               style={{ height: 200, width: "270PX" }}
+                              onClick={() => SingleProduct("DELL Core i5 11th Gen", "63640", "inspiron-3511-thin-and-light-laptop-dell-original-imag6n5kbmfcgxk6.webp")}
                             />
                             <div className="card-body text-center">
                               <h3 className="card-title ">DELL Core i5 11th Gen</h3>
@@ -415,6 +422,7 @@ function Products() {
                                   borderColor: "#000000",
                                   marginLeft: 2
                                 }}
+                                onClick={() => AddToCart("DELL Core i5 11th Gen", "63640", "inspiron-3511-thin-and-light-laptop-dell-original-imag6n5kbmfcgxk6.webp")}
                               >
                                 Buy Now
                               </button>
@@ -429,6 +437,7 @@ function Products() {
                               alt=""
                               className="card-img-top mx-auto p-2"
                               style={{ height: 200, width: "270PX" }}
+                              onClick={() => SingleProduct("Lenovo Core i3 10th Gen", "36490", "15ach6-gaming-laptop-lenovo-original-imaghnqezskfgzas.webp")}
                             />
                             <div className="card-body text-center">
                               <h3 className="card-title ">Lenovo Core i3 10th Gen</h3>
@@ -445,6 +454,7 @@ function Products() {
                                   borderColor: "#000000",
                                   marginLeft: 2
                                 }}
+                                onClick={() => AddToCart("Lenovo Core i3 10th Gen", "36490", "15ach6-gaming-laptop-lenovo-original-imaghnqezskfgzas.webp")}
                               >
                                 Buy Now
                               </button>
@@ -459,6 +469,7 @@ function Products() {
                               alt=""
                               className="card-img-top mx-auto p-2"
                               style={{ height: 200, width: "270PX" }}
+                              onClick={() => SingleProduct("acer Aspire 7 Ryzen 5 Hexa Core", "49990", "-original-imagah7xakzzergf.webp")}
                             />
                             <div className="card-body text-center">
                               <h3 className="card-title text-center">
@@ -479,6 +490,7 @@ function Products() {
                                   borderColor: "#000000",
                                   marginLeft: 2
                                 }}
+                                onClick={() => AddToCart("acer Aspire 7 Ryzen 5 Hexa Core", "49990", "-original-imagah7xakzzergf.webp")}
                               >
                                 Buy Now
                               </button>
@@ -493,6 +505,7 @@ function Products() {
                               alt=""
                               className="card-img-top mx-auto p-2"
                               style={{ height: 200, width: "190PX" }}
+                              onClick={() => SingleProduct("APPLE 2021 Macbook Pro M1 Pro", "186990", "mkgp3hn-a-thin-and-light-laptop-apple-original-imag7yznc5d2rsuh.webp")}
                             />
                             <div className="card-body text-center">
                               <h3 className="card-title text-center">
@@ -513,6 +526,7 @@ function Products() {
                                   borderColor: "#000000",
                                   marginLeft: 2
                                 }}
+                                onClick={() => AddToCart("APPLE 2021 Macbook Pro M1 Pro", "186990", "mkgp3hn-a-thin-and-light-laptop-apple-original-imag7yznc5d2rsuh.webp")}
                               >
                                 Buy Now
                               </button>

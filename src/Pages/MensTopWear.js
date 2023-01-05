@@ -48,12 +48,11 @@ function MensTopWear() {
       ;
   }, [])
 
-
-  const AddToCart = (pID, pTitle, pPrice,pImage) => {
+  const AddToCart = (pTitle, pPrice, pImage) => {
     let Cart = localStorage.getItem("Cart");
     if (Cart == null) {
       let Products = [];
-      let Product = { ProductId: pID, ProductName: pTitle, ProductPrice: pPrice, ProductQuantity: 1 ,ProductImage:pImage }
+      let Product = { ProductName: pTitle, ProductPrice: pPrice, ProductQuantity: 1, ProductImage: pImage }
       Products.push(Product);
       localStorage.setItem("Cart", JSON.stringify(Products));
       showToast("Product is added to cart");
@@ -61,11 +60,11 @@ function MensTopWear() {
     }
     else {
       let pcart = JSON.parse(Cart);
-      let oldProduct = pcart.find((item) => item.ProductId === pID)
+      let oldProduct = pcart.find((item) => item.ProductImage === pImage)
       if (oldProduct) {
         oldProduct.ProductQuantity = oldProduct.ProductQuantity + 1
         pcart.map((item) => {
-          if (item.Productid === oldProduct.ProductId) {
+          if (item.ProductImage === oldProduct.ProductImage) {
             item.ProductQuantity = oldProduct.ProductQuantity;
           }
 
@@ -74,7 +73,7 @@ function MensTopWear() {
 
         showToast("Product Quantity is increased");
       } else {
-        let Product = { ProductId: pID, ProductName: pTitle, ProductPrice: pPrice, ProductQuantity: 1 ,ProductImage:pImage }
+        let Product = { ProductName: pTitle, ProductPrice: pPrice, ProductQuantity: 1, ProductImage: pImage }
         pcart.push(Product)
         localStorage.setItem("Cart", JSON.stringify(pcart));
 
@@ -83,18 +82,17 @@ function MensTopWear() {
       UpdateCart();
     }
   }
+
   const history = useHistory();
-  const SingleProduct = (pID, pTitle, pPrice,pImage) => {
+  const SingleProduct = (pTitle, pPrice, pImage) => {
     let SingleProduct = localStorage.getItem("SingleProduct");
-    if (SingleProduct !== null) {
-      // console.log("Working")
-     let Products = [];
-     let Product = { ProductId: pID, ProductName: pTitle, ProductPrice: pPrice, ProductQuantity: 1 ,ProductImage:pImage }
-     Products.push(Product);
-     localStorage.setItem("SingleProduct", JSON.stringify(Products));
-     history.push("/SingleProduct")
-   }
- }
+    let Products = [];
+    let Product = { ProductName: pTitle, ProductPrice: pPrice, ProductQuantity: 1, ProductImage: pImage }
+    Products.push(Product);
+    localStorage.setItem("SingleProduct", JSON.stringify(Products));
+    history.push("/SingleProduct")
+  }
+
   function showToast(content) {
     document.getElementById('toast2').classList.add("display");
     document.getElementById('toast2').innerHTML = content;
@@ -175,8 +173,8 @@ function MensTopWear() {
                         src={process.env.PUBLIC_URL + `/images/${MensShirt.imageUrl}`}
                         alt=""
                         className="card-img-top mx-auto p-2"
-                        style={{ height: 200, width: "200PX", cursor:'pointer' }}
-                        onClick={() => SingleProduct(MensShirt._id, MensShirt.title, MensShirt.price,MensShirt.imageUrl)}
+                        style={{ height: 200, width: "200PX", cursor: 'pointer' }}
+                        onClick={() => SingleProduct(MensShirt._id, MensShirt.title, MensShirt.price, MensShirt.imageUrl)}
                       />
                       <div className="card-body text-center">
                         <h3 className="card-title ">{MensShirt.title}</h3>
@@ -192,7 +190,7 @@ function MensTopWear() {
                             borderColor: "#000000",
                             marginLeft: 2
                           }}
-                          onClick={() => AddToCart(MensShirt._id, MensShirt.title, MensShirt.price,MensShirt.imageUrl)}
+                          onClick={() => AddToCart(MensShirt._id, MensShirt.title, MensShirt.price, MensShirt.imageUrl)}
                         >
                           Buy Now
                         </button>
@@ -210,6 +208,7 @@ function MensTopWear() {
                               alt=""
                               className="card-img-top mx-auto p-2"
                               style={{ height: 200, width: "200PX" }}
+                              onClick={() => SingleProduct("Men Regular Fit Solid Cut Away Collar Casual Shirt", "499", "4.webp")}
                             />
                             <div className="card-body text-center">
                               <h3 className="card-title ">
@@ -228,6 +227,7 @@ function MensTopWear() {
                                   borderColor: "#000000",
                                   marginLeft: 2,
                                 }}
+                                onClick={() => AddToCart("Men Regular Fit Solid Cut Away Collar Casual Shirt", "499", "4.webp")}
                               >
                                 Buy Now
                               </button>
@@ -241,6 +241,7 @@ function MensTopWear() {
                               alt=""
                               className="card-img-top mx-auto p-2"
                               style={{ height: 200, width: "200PX" }}
+                              onClick={() => SingleProduct("Men Slim Fit Printed Spread Collar", "625", "5.webp")}
                             />
                             <div className="card-body text-center">
                               <h3 className="card-title ">
@@ -259,6 +260,7 @@ function MensTopWear() {
                                   borderColor: "#000000",
                                   marginLeft: 2,
                                 }}
+                                onClick={() => AddToCart("Men Slim Fit Printed Spread Collar", "625", "5.webp")}
                               >
                                 Buy Now
                               </button>
@@ -272,6 +274,7 @@ function MensTopWear() {
                               alt=""
                               className="card-img-top mx-auto p-2"
                               style={{ height: 200, width: "200PX" }}
+                              onClick={() => SingleProduct("Sleeve Full Sleeve Pattern Solid", "399", "6.webp")}
                             />
                             <div className="card-body text-center">
                               <h3 className="card-title text-center">
@@ -294,6 +297,7 @@ function MensTopWear() {
                                   borderColor: "#000000",
                                   marginLeft: 2,
                                 }}
+                                onClick={() => AddToCart("Sleeve Full Sleeve Pattern Solid", "399", "6.webp")}
                               >
                                 Buy Now
                               </button>
@@ -307,6 +311,7 @@ function MensTopWear() {
                               alt=""
                               className="card-img-top mx-auto p-2"
                               style={{ height: 200, width: "190PX" }}
+                              onClick={() => SingleProduct("Men Slim Fit Checkered Party Shirt", "379", "7.webp")}
                             />
                             <div className="card-body text-center">
                               <h3 className="card-title text-center">
@@ -329,6 +334,7 @@ function MensTopWear() {
                                   borderColor: "#000000",
                                   marginLeft: 2,
                                 }}
+                                onClick={() => AddToCart("Men Slim Fit Checkered Party Shirt", "379", "7.webp")}
                               >
                                 Buy Now
                               </button>
@@ -364,8 +370,8 @@ function MensTopWear() {
                         src={process.env.PUBLIC_URL + `/images/${MensTShirt.imageUrl}`}
                         alt=""
                         className="card-img-top mx-auto p-2"
-                        style={{ height: 200, width: "200PX", cursor:'pointer' }}
-                        onClick={() => SingleProduct(MensTShirt._id, MensTShirt.title, MensTShirt.price,MensTShirt.imageUrl)}
+                        style={{ height: 200, width: "200PX", cursor: 'pointer' }}
+                        onClick={() => SingleProduct(MensTShirt._id, MensTShirt.title, MensTShirt.price, MensTShirt.imageUrl)}
                       />
                       <div className="card-body text-center">
                         <h3 className="card-title ">{MensTShirt.title}</h3>
@@ -381,7 +387,7 @@ function MensTopWear() {
                             borderColor: "#000000",
                             marginLeft: 2
                           }}
-                          onClick={() => AddToCart(MensTShirt._id, MensTShirt.title, MensTShirt.price,MensTShirt.imageUrl)}
+                          onClick={() => AddToCart(MensTShirt._id, MensTShirt.title, MensTShirt.price, MensTShirt.imageUrl)}
                         >
                           Buy Now
                         </button>
@@ -399,6 +405,7 @@ function MensTopWear() {
                               alt=""
                               className="card-img-top mx-auto p-2"
                               style={{ height: 200, width: "180PX" }}
+                              onClick={() => SingleProduct("Round Neck Grey T-Shirt", "238", "s-bmrgyrnfull-z12-blive-original-imaghm8fyqhybkb5.webp")}
                             />
                             <div className="card-body text-center">
                               <h3 className="card-title ">Round Neck Grey T-Shirt</h3>
@@ -414,6 +421,7 @@ function MensTopWear() {
                                   borderColor: "#000000",
                                   marginLeft: 2
                                 }}
+                                onClick={() => AddToCart("Round Neck Grey T-Shirt", "238", "s-bmrgyrnfull-z12-blive-original-imaghm8fyqhybkb5.webp")}
                               >
                                 Buy Now
                               </button>
@@ -428,6 +436,7 @@ function MensTopWear() {
                               alt=""
                               className="card-img-top mx-auto p-2"
                               style={{ height: 200, width: "180PX" }}
+                              onClick={() => SingleProduct("Round Neck Green T-Shirt", "499", "3xl-ss20-sp15-scott-international-original-imafwjzdfja8v5ma.webp")}
                             />
                             <div className="card-body text-center">
                               <h3 className="card-title ">Round Neck Green T-Shirt</h3>
@@ -443,6 +452,7 @@ function MensTopWear() {
                                   borderColor: "#000000",
                                   marginLeft: 2
                                 }}
+                                onClick={() => AddToCart("Round Neck Green T-Shirt", "499", "3xl-ss20-sp15-scott-international-original-imafwjzdfja8v5ma.webp")}
                               >
                                 Buy Now
                               </button>
@@ -457,6 +467,7 @@ function MensTopWear() {
                               alt=""
                               className="card-img-top mx-auto p-2"
                               style={{ height: 200, width: "180PX" }}
+                              onClick={() => SingleProduct("Polo Neck Yellow T-Shirt", "319", "2.webp")}
                             />
                             <div className="card-body text-center">
                               <h3 className="card-title text-center">
@@ -475,6 +486,7 @@ function MensTopWear() {
                                   borderColor: "#000000",
                                   marginLeft: 2
                                 }}
+                                onClick={() => AddToCart("Polo Neck Yellow T-Shirt", "319", "2.webp")}
                               >
                                 Buy Now
                               </button>
@@ -488,6 +500,7 @@ function MensTopWear() {
                               alt=""
                               className="card-img-top mx-auto p-2"
                               style={{ height: 200, width: "180PX" }}
+                              onClick={() => SingleProduct("Polyester Half Sleeve Neck", "299", "3.webp")}
                             />
                             <div className="card-body text-center">
                               <h3 className="card-title text-center">
@@ -506,6 +519,7 @@ function MensTopWear() {
                                   borderColor: "#000000",
                                   marginLeft: 2
                                 }}
+                                onClick={() => AddToCart("Polyester Half Sleeve Neck", "299", "3.webp")}
                               >
                                 Buy Now
                               </button>
